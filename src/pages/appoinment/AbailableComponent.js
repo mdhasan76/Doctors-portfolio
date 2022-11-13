@@ -11,7 +11,7 @@ const AbailableComponent = ({ selectDate }) => {
             .then(res => res.json())
             .then(data => setAppoin(data))
     }, [])
-    console.log(appon)
+    // console.log(appon)
     return (
         <div className='my-10'>
             <p className='text-center text-primary font-bold text-lg py-6'>You Have Selected Date: {format(selectDate, 'PP')} </p>
@@ -25,7 +25,11 @@ const AbailableComponent = ({ selectDate }) => {
                 }
             </div>
             {
-                treatment && <OpenModal treatment={treatment} />
+                treatment && <OpenModal
+                    treatment={treatment}
+                    selectDate={selectDate}
+                    setTreatment={setTreatment}
+                />
             }
         </div>
     );
