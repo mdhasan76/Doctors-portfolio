@@ -1,0 +1,58 @@
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { Link } from 'react-router-dom';
+
+const SingUp = () => {
+    const { register, formState: { errors }, handleSubmit } = useForm();
+    const handleSignUp = (data) => {
+        console.log(data)
+    }
+
+    return (
+        <div className='min-h-[70vh] flex items-center justify-center'>
+            <div className='shadow-lg p-7 rounded-lg'>
+                <h2 className='text-xl text-center mb-8 font-medium'>SignUp</h2>
+                <form onSubmit={handleSubmit(handleSignUp)} className="max-w-sm">
+
+                    <label className=' font-medium'>Name</label>
+                    <input
+                        className='p-3 mb-3 rounded-lg w-full border' type="text"
+                        {...register("name", { required: "Name is Required", minLength: { value: 4, message: "at least 4 char" } })}
+                    />
+                    {errors.name && <p className='text-red-500'>{errors.name.message}</p>}
+
+                    <label className='font-medium'> Email</label>
+                    <input
+                        className='p-3 mb-3 rounded-lg w-full border' type="email"
+                        {...register("email", { required: "Email is Required" })}
+                    />
+                    {errors.email && <p className='text-red-500'>{errors.email.message}</p>}
+
+
+                    <label className=' font-medium'> Password</label>
+                    <input
+                        className='p-3 mb-3 rounded-lg w-full border' type="password"
+                        {...register("password",
+                            {
+                                required: "Password Required",
+                                minLength: { value: 6, message: "Min 6 char pass" },
+                                pattern: {
+                                    value: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                                    message: "Password not Strong"
+                                }
+                            })}
+                    />
+                    {errors.password && <p className='text-red-500'>{errors.password.message}</p>}
+
+                    <button className='btn btn-primary bg-accent p-3 mb-3 rounded-lg w-full text-gray-300 border-none' type="submit">Submit</button>
+
+                    <p className='text-sm text-center font-bold'>already have account? <Link to={'/login'} className='text-primary hover:link'> login</Link></p>
+                </form>
+                <div className="divider">OR</div>
+                <button className='btn btn-outline  p-3 mb-3 rounded-lg w-full' type="submit">Continew With GOOGLE</button>
+            </div>
+        </div>
+    );
+};
+
+export default SingUp;
