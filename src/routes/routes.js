@@ -4,6 +4,8 @@ import { createBrowserRouter } from "react-router-dom";
 import Login from "../pages/login/Login";
 import CoAppoinment from "../pages/appoinment/CoAppoinment";
 import SingUp from "../pages/singup/SingUp";
+import Dashboard from "../pages/dashboard/Dashboard";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
     {
@@ -27,6 +29,10 @@ const router = createBrowserRouter([
                 element: <SingUp />
             }
         ]
+    },
+    {
+        path: '/dashboard',
+        element: <PrivateRoute><Dashboard /></PrivateRoute>
     }
 ]);
 export default router

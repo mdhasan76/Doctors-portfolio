@@ -1,13 +1,20 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../shared/AuthProvider';
 
 const SingUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
+    const { createUser } = useContext(AuthContext);
     const handleSignUp = (data) => {
         console.log(data)
-    }
 
+        createUser(data.email, data.password)
+            .then(res => {
+                console.log(res.user)
+            })
+            .catch(err => console.log(err))
+    }
     return (
         <div className='min-h-[70vh] flex items-center justify-center'>
             <div className='shadow-lg p-7 rounded-lg'>
