@@ -1,3 +1,4 @@
+import toast from 'react-hot-toast'
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from './AuthProvider';
@@ -6,7 +7,9 @@ const Header = () => {
     const { user, logOut } = useContext(AuthContext);
     const handlelogOut = () => {
         logOut()
-            .then(() => console.log("logOut"))
+            .then(() => {
+                toast.success("LogOut success")
+            })
             .catch(err => console.log(err))
     }
     const menu = <React.Fragment>

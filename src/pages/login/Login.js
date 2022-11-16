@@ -1,16 +1,22 @@
 import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from "react-router-dom"
+import toast from 'react-hot-toast';
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { AuthContext } from '../shared/AuthProvider';
 const Login = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
-    const [error, setError] = useState("")
+    const [error, setError] = useState("");
+    const location = useLocation();
+    const navigate = useNavigate();
+    let from = location.state?.from?.pathname || '/';
     const { logIn } = useContext(AuthContext)
     const handleLogin = (data) => {
         console.log(data)
         logIn(data.email, data.password)
             .then(res => {
                 console.log(res.user)
+                toast.seccess("LogIn sucess")
+                navigate(from, { replace: true })
             })
             .catch(err => setError(err.message))
     }
