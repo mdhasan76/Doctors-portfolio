@@ -1,9 +1,10 @@
 import React from 'react';
+import MyAppoinment from './MyAppoinment';
 
 const Dashboard = () => {
     return (
         <div>
-            This in DeshBoard
+            <MyAppoinment />
         </div>
     );
 };

@@ -6,6 +6,7 @@ import CoAppoinment from "../pages/appoinment/CoAppoinment";
 import SingUp from "../pages/singup/SingUp";
 import Dashboard from "../pages/dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute";
+import DashboardLayout from "../layout/DashboardLayout";
 
 const router = createBrowserRouter([
     {
@@ -32,7 +33,13 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <PrivateRoute><Dashboard /></PrivateRoute>
+        element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <Dashboard />
+            }
+        ]
     }
 ]);
 export default router
