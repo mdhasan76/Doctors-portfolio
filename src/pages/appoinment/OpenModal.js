@@ -1,8 +1,12 @@
-import React from 'react';
-import { format } from 'date-fns'
+import React, { useContext } from 'react';
+import { format } from 'date-fns';
+import { AuthContext } from "../shared/AuthProvider"
+import toast from 'react-hot-toast';
 
-const OpenModal = ({ treatment, selectDate, setTreatment }) => {
+const OpenModal = ({ treatment, selectDate, setTreatment, refetch }) => {
+    const { user } = useContext(AuthContext)
     const { name, slots } = treatment;
+    const date = format(selectDate, "PP")
     const handleModal = (e) => {
         e.preventDefault();
         const form = e.target;
@@ -11,7 +15,7 @@ const OpenModal = ({ treatment, selectDate, setTreatment }) => {
         const email = form.email.value;
         const number = form.number.value;
         const booking = {
-            appoinmentDate: selectDate,
+            appoinmentDate: date,
             time,
             treatment: name,
             pataintName,
@@ -19,8 +23,26 @@ const OpenModal = ({ treatment, selectDate, setTreatment }) => {
             number
         }
 
-        console.log(booking)
-        setTreatment(null)
+        fetch("http://localhost:5000/bookings", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.acknowledged) {
+                    console.log(booking)
+                    setTreatment(null)
+                    toast.success("Booking success")
+                    refetch()
+                } else {
+                    toast.error(data.message)
+                    setTreatment(null)
+                }
+            })
+
     }
 
     return (
@@ -42,9 +64,12 @@ const OpenModal = ({ treatment, selectDate, setTreatment }) => {
                         }
                     </select>
 
-                    <input type="text" className='w-full border p-3 mb-5 rounded-lg' name="name" placeholder='Full name' />
+                    <input type="text" className='w-full border p-3 mb-5 rounded-lg' name="name" placeholder='Full name' defaultValue={user?.name} />
+
                     <input type="Number" className='w-full border p-3 mb-5 rounded-lg' name="number" placeholder='Phone Number' />
-                    <input type="email" name='email' className='w-full border p-3 mb-5 rounded-lg' placeholder='email' />
+
+                    <input type="email" defaultValue={user?.email} name='email' className='w-full border p-3 mb-5 rounded-lg' placeholder='email' />
+
                     <input type="submit" className='w-full bg-accent text-gray-200 p-3 mb-5 rounded-lg' value="SUBMIT" />
                 </form>
             </div>

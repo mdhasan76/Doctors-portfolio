@@ -15,7 +15,7 @@ const Login = () => {
         logIn(data.email, data.password)
             .then(res => {
                 console.log(res.user)
-                toast.seccess("LogIn sucess")
+                toast.success("LogIn sucess")
                 navigate(from, { replace: true })
             })
             .catch(err => setError(err.message))

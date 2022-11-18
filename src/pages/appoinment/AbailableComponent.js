@@ -1,16 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { format } from 'date-fns';
 import AppoinmentCart from './AppoinmentCart';
 import OpenModal from './OpenModal';
+import { useQuery } from '@tanstack/react-query';
 
 const AbailableComponent = ({ selectDate }) => {
-    const [appon, setAppoin] = useState([]);
+    // const [appon, setAppoin] = useState([]);
     const [treatment, setTreatment] = useState(null);
-    useEffect(() => {
-        fetch("appointment.json")
-            .then(res => res.json())
-            .then(data => setAppoin(data))
-    }, [])
+    const date = format(selectDate, "PP");
+    const { data: appon = [], refetch } = useQuery({
+        queryKey: ["appoinmentlist", date],
+        queryFn: async () => {
+            const res = await fetch(`http://localhost:5000/appoinmentlist?date=${date}`)
+            const data = await res.json()
+            return data
+        }
+    })
+
+    // useEffect(() => {
+    //     fetch("http://localhost:5000/appoinmentlist")
+    //         .then(res => res.json())
+    //         .then(data => setAppoin(data))
+    // }, [])
     // console.log(appon)
     return (
         <div className='my-10'>
@@ -29,6 +40,7 @@ const AbailableComponent = ({ selectDate }) => {
                     treatment={treatment}
                     selectDate={selectDate}
                     setTreatment={setTreatment}
+                    refetch={refetch}
                 />
             }
         </div>
