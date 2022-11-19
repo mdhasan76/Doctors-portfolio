@@ -1,20 +1,58 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../shared/AuthProvider';
+import useToken from '../shared/hooks/useToken';
 
 const SingUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createUser } = useContext(AuthContext);
+    const navigate = useNavigate();
+    const [userEmail, setUserEmail] = useState('')
+    const [token] = useToken(userEmail);
+    if (token) {
+        navigate('/')
+    }
     const handleSignUp = (data) => {
-        console.log(data)
 
+        //create user in firebase
         createUser(data.email, data.password)
             .then(res => {
                 console.log(res.user)
+                saveUser(data.email, data.password, data.name)
             })
             .catch(err => console.log(err))
     }
+
+    //save user on database
+    const saveUser = (email, name, password) => {
+        const user = { email, name, password }
+        fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: {
+                "content-type": "application/json"
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                setUserEmail(email)
+                console.log(data)
+            })
+    }
+
+    //get user token from Backend
+    // const getUserToken = (email) => {
+    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //         .then(res => res.json())
+    //         .then(data => {
+    //             if (data.accessToken) {
+    //                 localStorage.setItem("token", data.accessToken)
+    //                 navigate('/')
+    //             }
+    //         })
+    // }
+
     return (
         <div className='min-h-[70vh] flex items-center justify-center'>
             <div className='shadow-lg p-7 rounded-lg'>
