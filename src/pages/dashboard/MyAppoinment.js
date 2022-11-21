@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
 import { AuthContext } from '../shared/AuthProvider';
+import { Link } from 'react-router-dom'
 
 const MyAppoinment = () => {
     const { user } = useContext(AuthContext)
@@ -16,7 +17,7 @@ const MyAppoinment = () => {
             return data
         }
     })
-    console.log(bookings)
+    // console.log(bookings)
     if (isLoading) {
         return <div className="flex items-center justify-center ">
             <div className="w-40 h-40 border-t-4 border-b-4 border-green-900 rounded-full animate-spin"></div>
@@ -32,6 +33,7 @@ const MyAppoinment = () => {
                             <th>Name</th>
                             <th>Service</th>
                             <th>Time</th>
+                            <th>Payment</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -42,6 +44,15 @@ const MyAppoinment = () => {
                                     <td>{booking.pataintName}</td>
                                     <td>{booking.treatment}</td>
                                     <td>{booking.time}</td>
+                                    <td>
+                                        {
+                                            booking?.price && !booking?.paid && <Link to={`/dashboard/payment/${booking._id}`}><button className='btn btn-sm btn-primary text-white'>Pay Now</button></Link>
+                                        }
+                                        {
+                                            booking?.paid && booking?.price && <p>paid</p>
+                                        }
+
+                                    </td>
                                 </tr>
                             )
                         }

@@ -5,7 +5,7 @@ import toast from 'react-hot-toast';
 
 const OpenModal = ({ treatment, selectDate, setTreatment, refetch }) => {
     const { user } = useContext(AuthContext)
-    const { name, slots } = treatment;
+    const { name, slots, price } = treatment;
     const date = format(selectDate, "PP")
     const handleModal = (e) => {
         e.preventDefault();
@@ -20,7 +20,8 @@ const OpenModal = ({ treatment, selectDate, setTreatment, refetch }) => {
             treatment: name,
             pataintName,
             email,
-            number
+            number,
+            price
         }
 
         fetch("http://localhost:5000/bookings", {

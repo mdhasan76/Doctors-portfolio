@@ -7,6 +7,11 @@ import SingUp from "../pages/singup/SingUp";
 import Dashboard from "../pages/dashboard/Dashboard";
 import PrivateRoute from "./PrivateRoute";
 import DashboardLayout from "../layout/DashboardLayout";
+import Allusers from "../pages/dashboard/Allusers";
+import AdminRoute from "./AdminRouts";
+import AddDoctors from "../pages/dashboard/AddDoctors";
+import ManageDoctors from "../pages/dashboard/ManageDoctors";
+import BookingPayment from "../pages/dashboard/payment/BookingPayment";
 
 const router = createBrowserRouter([
     {
@@ -33,12 +38,28 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <DashboardLayout />,
+        element: <PrivateRoute><DashboardLayout /></PrivateRoute>,
         children: [
             {
                 path: '/dashboard',
-                element: <PrivateRoute><Dashboard /></PrivateRoute>
-            }
+                element: <Dashboard />
+            },
+            {
+                path: '/dashboard/allusers',
+                element: <AdminRoute><Allusers /></AdminRoute>
+            },
+            {
+                path: '/dashboard/adddoctors',
+                element: <AdminRoute><AddDoctors /></AdminRoute>
+            },
+            {
+                path: '/dashboard/managdoctors',
+                element: <AdminRoute><ManageDoctors /></AdminRoute>
+            },
+            {
+                path: '/dashboard/payment/:id',
+                element: <AdminRoute><BookingPayment /></AdminRoute>
+            },
         ]
     }
 ]);

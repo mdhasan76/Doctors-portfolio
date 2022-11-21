@@ -11,7 +11,12 @@ const AppBanner = ({ selectDate, setSelectDate }) => {
                     <DayPicker
                         mode="single"
                         selected={selectDate}
-                        onSelect={setSelectDate}
+                        // onSelect={setSelectDate}
+                        onSelect={(data) => {
+                            if (data) {
+                                setSelectDate(data)
+                            }
+                        }}
                     />
                 </div>
             </div>

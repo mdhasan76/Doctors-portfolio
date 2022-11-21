@@ -21,8 +21,8 @@ const Header = () => {
         {
             user?.uid ?
                 <>
-                    <li><button onClick={handlelogOut} className='btn btn-primary rounded '>LogOut</button></li>
                     <li><Link to="/dashboard">Dashboard</Link></li>
+                    <li><button onClick={handlelogOut} className='btn btn-primary rounded '>LogOut</button></li>
                 </>
                 :
                 <li><Link to={'/login'}>Login</Link></li>
