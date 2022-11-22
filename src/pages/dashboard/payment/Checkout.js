@@ -1,9 +1,12 @@
 import { CardElement, useElements, useStripe } from '@stripe/react-stripe-js';
 import React, { useEffect, useState } from 'react';
+import toast from 'react-hot-toast'
 
 const Checkout = ({ bookingData }) => {
     const [cardErr, setCardErr] = useState('')
     const [clientSecret, setClientSecret] = useState("");
+    const [success, setSuccess] = useState('');
+    const [transitionId, setTransitionId] = useState('')
     const stripe = useStripe();
     const elements = useElements();
 
@@ -23,7 +26,7 @@ const Checkout = ({ bookingData }) => {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data.clientSecret)
+                // console.log(data.clientSecret)
                 setClientSecret(data.clientSecret)
             });
     }, [price]);
@@ -70,7 +73,42 @@ const Checkout = ({ bookingData }) => {
             setCardErr(confirmError.message)
             return;
         }
-        console.log("error focuse last line", paymentIntent)
+
+        if (paymentIntent.status === "succeeded") {
+            setTransitionId(paymentIntent.id)
+            setSuccess("Your Payment is Successfully paid")
+            const paymentObj = {
+                success,
+                transitionId,
+                email,
+                paid: "true"
+            }
+            paymentFetch(paymentObj)
+                .then(data => {
+                    if (data.acknowledged) {
+                        toast.success("Payment sucessFull")
+                    }
+                })
+                .catch(err => {
+                    toast.error(err.message)
+                    console.log(err)
+                })
+        }
+        // console.log("error focuse last line", paymentIntent)
+    }
+
+    const paymentFetch = async (value) => {
+        const url = 'http://localhost:5000/paymentConfirm'
+        const res = await fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(value)
+        });
+        const data = await res.json();
+        return data;
+
     }
     return (
         <div>
@@ -96,7 +134,10 @@ const Checkout = ({ bookingData }) => {
                     Pay
                 </button>
             </form>
-
+            <div className='py-3'>
+                <p>{success}</p>
+                <p className='font-bold'>{transitionId}</p>
+            </div>
         </div>
     );
 };
