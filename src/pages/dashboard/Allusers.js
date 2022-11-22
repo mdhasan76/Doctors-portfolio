@@ -33,15 +33,18 @@ const Allusers = () => {
     const handleDelete = (id) => {
         fetch(`http://localhost:5000/dashboard/allusers/${id}`, {
             method: "DELETE",
+            headers: {
+                authorization: `bearer ${localStorage.getItem('token')}`
+            }
         })
             .then(res => res.json())
             .then(data => {
                 if (data.deletedCount > 0) {
                     removeUser().then(() => {
                         toast.success("User Delete sucessful");
+                        refetch()
                     }
                     ).catch(err => console.log(err))
-                    refetch()
                 }
             })
     }
