@@ -18,7 +18,7 @@ const Allusers = () => {
         fetch(`http://localhost:5000/dashboard/allusers/${id}`, {
             method: "PUT",
             headers: {
-                autorization: `bearer ${localStorage.getItem('token')}`
+                authorization: `bearer ${localStorage.getItem('token')}`
             }
         })
             .then(res => res.json())
