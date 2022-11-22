@@ -20,7 +20,7 @@ const ManageDoctors = () => {
             }
         }
     })
-
+    console.log(doctors)
 
     const handleDelete = (user) => {
         fetch(`http://localhost:5000/doctors/${user._id}`, {
