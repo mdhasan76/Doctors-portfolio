@@ -24,7 +24,7 @@ const CheckOutForm = ({ bookingData }) => {
     }, [price]);
     const handleSubmit = async (event) => {
         event.preventDefault();
-        if (!stripe || !elements) {
+        if (!stripe) {
             return;
         }
         const card = elements.getElement(CardElement);
@@ -38,25 +38,25 @@ const CheckOutForm = ({ bookingData }) => {
         if (error) {
             setErr(error.message)
         }
-        // const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
-        //     clientSecret,
-        //     {
-        //         payment_method: {
-        //             card: card,
-        //             billing_details: {
-        //                 name: pataintName,
-        //                 email: email,
-        //                 service_name: treatment
-        //             },
-        //         },
-        //     },
-        // );
+        const { paymentIntent, error: confirmError } = await stripe.confirmCardPayment(
+            clientSecret,
+            {
+                payment_method: {
+                    card: card,
+                    billing_details: {
+                        name: pataintName,
+                        email: email,
+                        service_name: treatment
+                    },
+                },
+            },
+        );
 
-        // if (confirmError) {
-        //     setErr(confirmError.message)
-        //     return
-        // }
-        // console.log( paymentMethod)
+        if (confirmError) {
+            setErr(confirmError.message)
+            return
+        }
+        console.log(paymentMethod)
     }
 
 

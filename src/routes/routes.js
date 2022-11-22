@@ -58,6 +58,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/payment/:id',
+                loader: ({ params }) => fetch(`http://localhost:5000/dashboard/payment/${params.id}`),
                 element: <AdminRoute><BookingPayment /></AdminRoute>
             },
         ]
