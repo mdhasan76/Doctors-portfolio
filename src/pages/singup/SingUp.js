@@ -8,8 +8,12 @@ const SingUp = () => {
     const { register, formState: { errors }, handleSubmit } = useForm();
     const { createUser } = useContext(AuthContext);
     const navigate = useNavigate();
-    const [userEmail, setUserEmail] = useState('')
+    const [userEmail, setUserEmail] = useState('');
+
+
     const [token] = useToken(userEmail);
+
+
     if (token) {
         navigate('/')
     }

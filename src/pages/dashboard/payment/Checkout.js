@@ -76,16 +76,19 @@ const Checkout = ({ bookingData }) => {
 
         if (paymentIntent.status === "succeeded") {
             setTransitionId(paymentIntent.id)
-            setSuccess("Your Payment is Successfully paid")
+            setSuccess("Your Payment is Successfully paid");
+            console.log('after clear', transitionId, success)
+            console.log(paymentIntent)
             const paymentObj = {
-                success,
-                transitionId,
-                email,
-                paid: "true"
+                success: success,
+                transitionId: transitionId,
+                email: email,
+                bookingId: _id
             }
             paymentFetch(paymentObj)
                 .then(data => {
                     if (data.acknowledged) {
+                        console.log(data, paymentObj)
                         toast.success("Payment sucessFull")
                     }
                 })
@@ -94,6 +97,7 @@ const Checkout = ({ bookingData }) => {
                     console.log(err)
                 })
         }
+        console.log('before clear', success, transitionId)
         // console.log("error focuse last line", paymentIntent)
     }
 
