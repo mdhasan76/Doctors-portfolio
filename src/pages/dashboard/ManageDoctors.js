@@ -7,7 +7,7 @@ const ManageDoctors = () => {
         queryKey: ['doctors'],
         queryFn: async () => {
             try {
-                const res = await fetch('http://localhost:5000/doctors', {
+                const res = await fetch('https://doctors-portal-server-mdhasan76.vercel.app/doctors', {
                     headers: {
                         authorization: `bearer ${localStorage.getItem('token')}`
                     }
@@ -23,7 +23,7 @@ const ManageDoctors = () => {
     console.log(doctors)
 
     const handleDelete = (user) => {
-        fetch(`http://localhost:5000/doctors/${user._id}`, {
+        fetch(`https://doctors-portal-server-mdhasan76.vercel.app/doctors/${user._id}`, {
             method: "DELETE",
         })
             .then(res => res.json())

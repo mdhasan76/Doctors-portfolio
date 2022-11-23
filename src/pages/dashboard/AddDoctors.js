@@ -30,7 +30,7 @@ const AddDoctors = () => {
                     // console.log(imgdata.data.url)
 
                     //save doctors data in database
-                    fetch('http://localhost:5000/doctors', {
+                    fetch('https://doctors-portal-server-mdhasan76.vercel.app/doctors', {
                         method: "POST",
                         headers: {
                             'content-type': 'application/json',
@@ -51,7 +51,7 @@ const AddDoctors = () => {
     const { data: serviceName = [], isLoading } = useQuery({
         queryKey: ['bookingSpecial'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/bookingSpecial');
+            const res = await fetch('https://doctors-portal-server-mdhasan76.vercel.app/bookingSpecial');
             const data = await res.json();
             return data
         }

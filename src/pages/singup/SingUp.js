@@ -31,7 +31,7 @@ const SingUp = () => {
     //save user on database
     const saveUser = (email, name, password) => {
         const user = { email, name, password }
-        fetch("http://localhost:5000/users", {
+        fetch("https://doctors-portal-server-mdhasan76.vercel.app/users", {
             method: "POST",
             headers: {
                 "content-type": "application/json"
@@ -47,7 +47,7 @@ const SingUp = () => {
 
     //get user token from Backend
     // const getUserToken = (email) => {
-    //     fetch(`http://localhost:5000/jwt?email=${email}`)
+    //     fetch(`https://doctors-portal-server-mdhasan76.vercel.app/jwt?email=${email}`)
     //         .then(res => res.json())
     //         .then(data => {
     //             if (data.accessToken) {

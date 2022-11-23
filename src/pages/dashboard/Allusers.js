@@ -8,14 +8,14 @@ const Allusers = () => {
     const { data: allusers = [], refetch } = useQuery({
         queryKey: ['allusers'],
         queryFn: async () => {
-            const res = await fetch("http://localhost:5000/allusers");
+            const res = await fetch("https://doctors-portal-server-mdhasan76.vercel.app/allusers");
             const data = await res.json();
             return data
         }
     })
 
     const handleMakeAdmin = (id) => {
-        fetch(`http://localhost:5000/dashboard/allusers/${id}`, {
+        fetch(`https://doctors-portal-server-mdhasan76.vercel.app/dashboard/allusers/${id}`, {
             method: "PUT",
             headers: {
                 authorization: `bearer ${localStorage.getItem('token')}`
@@ -31,7 +31,7 @@ const Allusers = () => {
     }
 
     const handleDelete = (id) => {
-        fetch(`http://localhost:5000/dashboard/allusers/${id}`, {
+        fetch(`https://doctors-portal-server-mdhasan76.vercel.app/dashboard/allusers/${id}`, {
             method: "DELETE",
             headers: {
                 authorization: `bearer ${localStorage.getItem('token')}`

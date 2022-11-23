@@ -16,7 +16,7 @@ const Checkout = ({ bookingData }) => {
 
     useEffect(() => {
         // Create PaymentIntent as soon as the page loads
-        fetch("http://localhost:5000/create-payment-intent", {
+        fetch("https://doctors-portal-server-mdhasan76.vercel.app/create-payment-intent", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -102,7 +102,7 @@ const Checkout = ({ bookingData }) => {
     }
 
     const paymentFetch = async (value) => {
-        const url = 'http://localhost:5000/paymentConfirm'
+        const url = 'https://doctors-portal-server-mdhasan76.vercel.app/paymentConfirm'
         const res = await fetch(url, {
             method: "POST",
             headers: {

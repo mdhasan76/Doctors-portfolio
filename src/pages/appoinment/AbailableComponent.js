@@ -11,14 +11,14 @@ const AbailableComponent = ({ selectDate }) => {
     const { data: appon = [], refetch } = useQuery({
         queryKey: ["appoinmentlist", date],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/appoinmentlist?date=${date}`)
+            const res = await fetch(`https://doctors-portal-server-mdhasan76.vercel.app/appoinmentlist?date=${date}`)
             const data = await res.json()
             return data
         }
     })
 
     // useEffect(() => {
-    //     fetch("http://localhost:5000/appoinmentlist")
+    //     fetch("https://doctors-portal-server-mdhasan76.vercel.app/appoinmentlist")
     //         .then(res => res.json())
     //         .then(data => setAppoin(data))
     // }, [])
